@@ -1,0 +1,25 @@
+﻿# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# github
+/.github
+
+# compiled output
+dist/
+
+# dependencies
+node_modules/
+
+# IDEs and editors
+.idea/
+
+# build tools
+coverage/
+test-report.xml
+
+# local settings
+/src/local.settings.json
+
+# misc
+npm-debug.log
+yarn-error.log
+package-lock.json

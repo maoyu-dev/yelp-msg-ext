@@ -1,0 +1,42 @@
+{
+    "$schema": "https://statics.teams.microsoft.com/sdk/v1.0/manifest/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.0",
+    "version": "1.0.0",
+    "id": "32a4468e-b0e0-4df3-95b5-b87b6b216751",
+    "packageName": "com.microsoftTeams.yelp",
+    "developer": {
+        "name": "Daniel",
+        "websiteUrl": "https://www.microsoft.com",
+        "privacyUrl": "https://www.microsoft.com/privacy",
+        "termsOfUseUrl": "https://www.microsoft.com/termsofuse"
+    },
+    "name": {
+        "short": "Yelp",
+        "full": "Yelp Messaging Extension for Microsoft Teams"
+    },
+    "description": {
+        "short": "Yelp Messaging Extension for Microsoft Teams",
+        "full": "Sample messaging extension using yelp api."
+    },
+    "icons": {
+        "outline": "yelp20x20.png",
+        "color": "yelp96x96.png"
+    },
+    "accentColor": "#60A18E",
+    "composeExtensions": [{
+        "botId": "32a4468e-b0e0-4df3-95b5-b87b6b216751",
+        "commands": [{
+            "id": "getYelpResults",
+            "description": "Gets results from Yelp",
+            "title": "Get Yelp results",
+            "initialRun": false,
+            "parameters": [{
+                "name": "bizQuery",
+                "description": "Search businesses",
+                "title" : "Business query"
+            }]
+        }]
+    }],
+    "permissions": [],
+    "validDomains": []
+}
