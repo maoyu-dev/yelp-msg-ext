@@ -1,6 +1,5 @@
 {
-    "$schema": "https://statics.teams.microsoft.com/sdk/v1.0/manifest/MicrosoftTeams.schema.json",
-    "manifestVersion": "1.0",
+    "manifestVersion": "1.3",
     "version": "1.0.0",
     "id": "32a4468e-b0e0-4df3-95b5-b87b6b216751",
     "packageName": "com.microsoftTeams.yelp",
@@ -34,6 +33,16 @@
                 "name": "bizQuery",
                 "description": "Search businesses",
                 "title" : "Business query"
+            }]
+        },
+        {
+            "id": "setDefaultLocation",
+            "description": "Set default search location",
+            "title": "Set location",
+            "parameters": [{
+                "name": "locQuery",
+                "description": "Type and search address",
+                "title" : "Set default search location"
             }]
         }]
     }],

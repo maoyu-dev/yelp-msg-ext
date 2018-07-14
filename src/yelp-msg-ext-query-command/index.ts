@@ -2,7 +2,8 @@ import { Context, HttpMethod, HttpRequest, HttpResponse, HttpStatusCode } from '
 import * as botbuilder from 'botbuilder';
 import * as teamBuilder from 'botbuilder-teams';
 import { HttpRequestWrapper } from './httpRequestWrapper';
-import { onQuery } from './onQuery';
+import { onSearchQuery } from './onSearchQuery';
+import { onLocationQuery } from './onLocationQuery';
 
 export function run(context: Context, req: HttpRequest): any {
   const teamChatConnector = new teamBuilder.TeamsChatConnector({
@@ -14,7 +15,14 @@ export function run(context: Context, req: HttpRequest): any {
   (event: botbuilder.IEvent,
    query: teamBuilder.ComposeExtensionQuery,
    callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
-      onQuery(context, query, callback);
+    onSearchQuery(context, query, callback);
+  });
+
+  teamChatConnector.onQuery('setDefaultLocation',
+  (event: botbuilder.IEvent,
+   query: teamBuilder.ComposeExtensionQuery,
+   callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
+    onLocationQuery(context, query, callback);
   });
 
   const res: HttpRequestWrapper = new HttpRequestWrapper();

@@ -15,7 +15,7 @@ function getPreviewCard(place: any): botbuilder.ThumbnailCard {
   .images([ new botbuilder.CardImage().url(place.image_url) ]);
 }
 
-export function onQuery(
+export function onSearchQuery(
   context: Context,
   query: teamBuilder.ComposeExtensionQuery,
   callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void): void {
