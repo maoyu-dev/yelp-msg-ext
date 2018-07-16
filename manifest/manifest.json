@@ -14,8 +14,8 @@
         "full": "Yelp Messaging Extension for Microsoft Teams"
     },
     "description": {
-        "short": "Yelp Messaging Extension for Microsoft Teams",
-        "full": "Sample messaging extension using yelp api."
+        "short": "This app lets you discover local businesses and share them in a conversation.",
+        "full": "Yelp puts great local businesses right at your fingertips. Yelp has over 135 million restaurant and business reviews worldwide. Whether you’re looking for a new pizzeria, a great coffee shop nearby, Yelp is your city guide to finding the perfect places to eat, shop, drink, relax, visit and play. Discover local businesses near you, then share them in a conversation."
     },
     "icons": {
         "outline": "yelp20x20.png",
@@ -26,13 +26,13 @@
         "botId": "32a4468e-b0e0-4df3-95b5-b87b6b216751",
         "commands": [{
             "id": "getYelpResults",
-            "description": "Gets results from Yelp",
-            "title": "Get Yelp results",
+            "description": "Gets information on local businesses",
+            "title": "Search",
             "initialRun": false,
             "parameters": [{
                 "name": "bizQuery",
-                "description": "Search businesses",
-                "title" : "Business query"
+                "description": "Discover local businesses",
+                "title" : "Discover local businesses"
             }]
         },
         {

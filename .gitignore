@@ -19,6 +19,9 @@ test-report.xml
 # local settings
 /src/local.settings.json
 
+# manifest
+manifest/*.zip
+
 # misc
 npm-debug.log
 yarn-error.log

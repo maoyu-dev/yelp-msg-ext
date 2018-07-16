@@ -4,6 +4,7 @@ import * as teamBuilder from 'botbuilder-teams';
 import { HttpRequestWrapper } from './httpRequestWrapper';
 import { onSearchQuery } from './onSearchQuery';
 import { onLocationQuery } from './onLocationQuery';
+import { onSelectItem } from './onSelectItem';
 
 export function run(context: Context, req: HttpRequest): any {
   const teamChatConnector = new teamBuilder.TeamsChatConnector({
@@ -23,6 +24,13 @@ export function run(context: Context, req: HttpRequest): any {
    query: teamBuilder.ComposeExtensionQuery,
    callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
     onLocationQuery(context, query, callback);
+  });
+
+  teamChatConnector.onSelectItem(
+    (event: botbuilder.IEvent,
+     query: teamBuilder.ComposeExtensionQuery,
+     callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
+     onSelectItem(context, query, callback);
   });
 
   const res: HttpRequestWrapper = new HttpRequestWrapper();

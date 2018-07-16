@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "azure-functions-ts-essentials": "1.3.2",
+    "azure-storage": "^2.10.0",
     "botbuilder": "^3.8.0",
     "botbuilder-teams": "^0.1.7",
     "request": "^2.87.0",
