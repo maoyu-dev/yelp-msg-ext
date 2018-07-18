@@ -22,6 +22,7 @@ export function onSearchQuery(
   callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void): void {
   const tableSvc = azure.createTableService(process.env.STORAGE_ACCOUNT, process.env.STORAGE_KEY);
   const userId = context.req.body.address && context.req.body.address.user ? context.req.body.address.user.id : undefined;
+  const isInitialRun = query.parameters.length === 1 && query.parameters[0].name === 'initialRun';
 
   // get user default location
   tableSvc.retrieveEntity('yelpDefaultLocation', 'yelpDefaultLocation', userId, (error, result: any, tableResponse) => {
@@ -32,43 +33,49 @@ export function onSearchQuery(
         .toResponse(), 200);
     else {
       const location = JSON.parse(result.location._);
-      const limit = 25;
-      const apiKey = process.env.YELP_API_KEY;
-      const title = query.parameters && query.parameters[0].name === 'bizQuery'
-      ? query.parameters[0].value
-      : '';
-      const searchRequest = {
-        term: title,
-        latitude: location.lat,
-        longitude: location.lon,
-        limit
-      };
-      const client = yelp.client(apiKey);
-      client.search(searchRequest)
-      .then(response => {
-        const attachments: Array<teamBuilder.ComposeExtensionAttachment> = [];
-        response.jsonBody.businesses.forEach(place => {
-          const previewCard = getPreviewCard(place);
-          const cardAttachment = getPreviewCard(place)
-            .buttons([ new botbuilder.CardAction()
-              .type('openUrl')
-              .value(place.url)
-              .title('View listing')])
-            .toAttachment();
-          (cardAttachment as teamBuilder.ComposeExtensionAttachment).preview = previewCard.toAttachment();
-          attachments.push(cardAttachment);
+
+      if (isInitialRun)
+        callback(undefined, teamBuilder.ComposeExtensionResponse
+          .message()
+          .text(`Searching near ${location.friendlyName}`)
+          .toResponse(), 200);
+      else {
+        const limit = 25;
+        const apiKey = process.env.YELP_API_KEY;
+        const title = query.parameters && query.parameters[0].name === 'bizQuery'
+        ? query.parameters[0].value
+        : '';
+        const searchRequest = {
+          term: title,
+          latitude: location.lat,
+          longitude: location.lon,
+          limit
+        };
+        const client = yelp.client(apiKey);
+        client.search(searchRequest)
+        .then(response => {
+          const attachments: Array<teamBuilder.ComposeExtensionAttachment> = [];
+          response.jsonBody.businesses.forEach(place => {
+            const previewCard = getPreviewCard(place);
+            const cardAttachment = getPreviewCard(place)
+              .buttons([ new botbuilder.CardAction()
+                .type('openUrl')
+                .value(place.url)
+                .title('View listing')])
+              .toAttachment();
+            (cardAttachment as teamBuilder.ComposeExtensionAttachment).preview = previewCard.toAttachment();
+            attachments.push(cardAttachment);
+          });
+          const composeExtensionRes = teamBuilder.ComposeExtensionResponse.result('list')
+            .attachments(attachments)
+            .toResponse();
+          callback(undefined, composeExtensionRes, 200);
+        })
+        .catch(e => {
+          context.log(`Error process query command: ${JSON.stringify(e)}`);
+          throw e;
         });
-
-        const composeExtensionRes = teamBuilder.ComposeExtensionResponse.result('list')
-          .attachments(attachments)
-          .toResponse();
-        callback(undefined, composeExtensionRes, 200);
-
-      })
-      .catch(e => {
-        context.log(`Error process query command: ${JSON.stringify(e)}`);
-        throw e;
-      });
+      }
     }
   });
 }

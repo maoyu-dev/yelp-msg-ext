@@ -28,7 +28,7 @@
             "id": "getYelpResults",
             "description": "Gets information on local businesses",
             "title": "Search",
-            "initialRun": false,
+            "initialRun": true,
             "parameters": [{
                 "name": "bizQuery",
                 "description": "Discover local businesses",

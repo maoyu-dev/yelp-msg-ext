@@ -33,7 +33,8 @@ export function onLocationQuery(
             .value({
                 location: {
                     lon: result.position.lon,
-                    lat: result.position.lat
+                    lat: result.position.lat,
+                    friendlyName: result.address.freeformAddress
                 }
             } as any));
             const cardAttachment: teamBuilder.ComposeExtensionAttachment = card.toAttachment();
